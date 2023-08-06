@@ -206,7 +206,7 @@ app.get("/users/:id", async function (req,res){
 
     try {
       const id = req.params.id
-        let data = await userDetails.findOne({mobile:id})
+        let data = await userDetails.findOne({phone:id})
         return res.status(200).json(data)
 
     }catch(err){
