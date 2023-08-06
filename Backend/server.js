@@ -203,8 +203,10 @@ app.get("/users", async function(req,res){
     return res.send(data)
 })
 app.get("/users/:id", async function (req,res){
+
     try {
-        let data = await userDetails.findOne()
+      const id = req.params.id
+        let data = await userDetails.findOne({mobile:id})
         return res.status(200).json(data)
 
     }catch(err){
@@ -212,6 +214,7 @@ app.get("/users/:id", async function (req,res){
     }
    
 })
+
 
 const port = process.env.PORT || 5000;
 app.listen(port,  () => {
