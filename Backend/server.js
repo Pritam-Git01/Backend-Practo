@@ -224,7 +224,8 @@ app.get("/users", async function(req,res){
 })
 app.get("/users/:id", async function (req,res){
     try {
-        let data = await userDetails.findOne()
+      const id = req.params.id
+        let data = await userDetails.findOne({phone:id})
         return res.status(200).json(data)
 
     }catch(err){
