@@ -194,8 +194,28 @@ app.put("/consult", async function(req,res){
 })
 
 app.post("/users", async function(req,res){
+  let find = await userDetails.findOne({phone:{$eq: req.body.phone}})
+
+  console.log(find, req.body.phone)
+  if(find === null){
     let data = await userDetails.create(req.body)
+    const temp =  {
+      status:200,
+      response:data
+        }
     return res.send(data)
+  } else {
+ const temp =  {
+  status:404,
+  response:null
+    }
+    return res.send(temp)
+  }
+    
+})
+app.post("/users",async function(req,res){
+  let data = await userDetails.create(req.body)
+  return res.status(200).json(data)
 })
 
 app.get("/users", async function(req,res){
@@ -203,10 +223,8 @@ app.get("/users", async function(req,res){
     return res.send(data)
 })
 app.get("/users/:id", async function (req,res){
-
     try {
-      const id = req.params.id
-        let data = await userDetails.findOne({phone:id})
+        let data = await userDetails.findOne()
         return res.status(200).json(data)
 
     }catch(err){
@@ -214,7 +232,6 @@ app.get("/users/:id", async function (req,res){
     }
    
 })
-
 
 const port = process.env.PORT || 5000;
 app.listen(port,  () => {
