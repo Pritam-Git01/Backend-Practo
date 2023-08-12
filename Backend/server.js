@@ -12,6 +12,7 @@ const symptomsData = require("./Schema/Symptoms");
 const doctorsData = require("./Schema/DoctorsData");
 const consultationData = require("./Schema/ConsultData");
 const userDetails = require("./Schema/User");
+const bookingData = require("./Schema/Booking")
 const dotenv =  require("dotenv");
 const  mongoose  = require("mongoose");
 const Razorpay  = require("razorpay");
@@ -233,6 +234,23 @@ app.get("/users/:id", async function (req,res){
     }
    
 })
+app.post("/booking-data", async function (req, res) {
+  try {
+    let data = await bookingData.create(req.body);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.get("/booking-data", async function (req, res) {
+  try {
+    let data = await bookingData.find();
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 const port = process.env.PORT || 5000;
 app.listen(port,  () => {
