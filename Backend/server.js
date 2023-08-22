@@ -233,6 +233,7 @@ app.get("/users/:id", async function (req, res) {
     let data = await userDetails.findOne({ phone: id });
     return res.status(200).json(data);
   } catch (err) {
+
     res.status(500).json(err);
   }
 });
@@ -264,6 +265,16 @@ app.get("/booking-Data", async function (req, res) {
     res.status(500).json(err);
   }
 });
+
+app.get("/booking-Data/:id", async function(req,res){
+  try{
+    const id = req.params.id;
+    let find = await bookingData.find({phone:id})
+    res.status(200).json(find)
+  } catch(err) {
+res.status(500).json(err)
+  }
+})
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
